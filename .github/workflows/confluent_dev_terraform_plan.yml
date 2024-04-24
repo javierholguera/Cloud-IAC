@@ -1,0 +1,39 @@
+name: "Confluent DEV - Terraform Plan"
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'environments/confluent/dev/**'
+      - 'modules/**'
+      - '*.tf'
+
+jobs:
+  terraform:
+    name: "Plan"
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: "Checkout"
+      uses: actions/checkout@v4
+
+    - name: "Setup Terraform"
+      uses: hashicorp/setup-terraform@v3
+
+    - name: "Terraform Init"
+      run: terraform init
+      working-directory: environments/confluent/dev
+
+    - name: "Terraform Plan"
+      run: terraform plan
+      working-directory: environments/confluent/dev
+      env:
+        # AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        # AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        # ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        # ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+        # ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        # ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+        CONFLUENT_CLOUD_API_KEY: ${{ secrets.CONFLUENT_CLOUD_API_KEY }}
+        CONFLUENT_CLOUD_API_SECRET: ${{ secrets.CONFLUENT_CLOUD_API_SECRET }}
