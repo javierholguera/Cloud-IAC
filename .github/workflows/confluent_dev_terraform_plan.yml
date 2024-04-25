@@ -13,6 +13,7 @@ jobs:
   terraform:
     name: "Plan"
     runs-on: ubuntu-latest
+    environment: dev
 
     steps:
     - name: "Checkout"
@@ -37,3 +38,4 @@ jobs:
         # ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
         CONFLUENT_CLOUD_API_KEY: ${{ secrets.CONFLUENT_CLOUD_API_KEY }}
         CONFLUENT_CLOUD_API_SECRET: ${{ secrets.CONFLUENT_CLOUD_API_SECRET }}
+        TF_VAR_github_token: ${{ secrets.GITHUB_TOKEN }}
